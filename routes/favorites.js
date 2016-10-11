@@ -4,7 +4,7 @@
 const boom = require('boom');
 const express = require('express');
 const ev = require('express-validation');
-const validations = require('../validations/tracks');
+const validations = require('../validations/favorites');
 const jwt = require('jsonwebtoken');
 const knex = require('../knex');
 const { camelizeKeys, decamelizeKeys } = require('humps');
@@ -52,7 +52,7 @@ router.get('/favorites', authorize, (req, res, next) => {
   });
 });
 
-router.post('/favorites',  authorize, ev(validations.post), (req, res, next) => {
+router.post('/favorites', authorize, ev(validations.post), (req, res, next) => {
   const { userId } = req.token;
   const { bookId } = req.body;
 

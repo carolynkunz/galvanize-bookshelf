@@ -3,7 +3,7 @@
 const boom = require('boom');
 const express = require('express');
 const ev = require('express-validation');
-const validations = require('../validations/tracks');
+const validations = require('../validations/books');
 const knex = require('../knex');
 const { camelizeKeys, decamelizeKeys } = require('humps');
 

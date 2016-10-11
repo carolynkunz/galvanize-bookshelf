@@ -15,7 +15,7 @@ module.exports.post = {
     genre: Joi.string()
       .label('Genre')
       .required()
-      .trim()
+      .trim(),
     description: Joi.string()
       .label('Description')
       .required()
@@ -23,6 +23,6 @@ module.exports.post = {
     coverUrl: Joi.string()
       .label('Cover URL')
       .required()
-      .trim(),
+      .trim()
   }
 };
