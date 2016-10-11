@@ -24,7 +24,7 @@ const authorize = function(req, res, next) {
   });
 };
 
-router.get('/favorites/:id', authorize, (req, res, next) => {
+router.get('/favorites/check', authorize, (req, res, next) => {
   knex('favorites')
   .where('book_id', req.query.bookId)
   .then((favorites) => {
@@ -57,7 +57,7 @@ router.post('/favorites', authorize, ev(validations.post), (req, res, next) => {
   const { bookId } = req.body;
 
   if (isNaN(bookId)) {
-    return next(boom.create(400, 'Book ID must be an interger'));
+    return next(boom.create(400, 'Book ID must be an integer'));
   }
 
   const insertFavorite = { userId, bookId };
