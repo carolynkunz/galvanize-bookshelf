@@ -3,6 +3,8 @@
 const boom = require('boom');
 const bcrypt = require('bcrypt-as-promised');
 const express = require('express');
+const ev = require('express-validation');
+const validations = require('../validations/tracks');
 const jwt = require('jsonwebtoken');
 const knex = require('../knex');
 const { camelizeKeys, decamelizeKeys } = require('humps');
@@ -10,8 +12,8 @@ const { camelizeKeys, decamelizeKeys } = require('humps');
 // eslint-disable-next-line new-cap
 const router = express.Router();
 
-router.get('/token', (req, res, next) => {
-  jwt.verify(req.cookies.token, process.env.JWT_SECRET, (err, decoded) => {
+router.get('/token', (req, res, _next) => {
+  jwt.verify(req.cookies.token, process.env.JWT_SECRET, (err, _decoded) => {
     if (err) {
       return res.send(false);
     }
@@ -20,25 +22,16 @@ router.get('/token', (req, res, next) => {
   });
 });
 
-router.post('/token', (req, res, next) => {
+router.post('/token', ev(validations.post), (req, res, next) => {
   const { email, password } = req.body;
-
-  if (!email || !email.trim()) {
-    return next(boom.create(400, 'Email must not be blank'));
-  }
-
-  if (!password || password.length < 8) {
-    return next(boom.create(400, 'Password must be at least 8 characters long'));
-  }
-
   let user;
 
   knex('users')
     .where('email', email)
     .first()
     .then((row) => {
-      if(!row){
-        throw boom.create(400, 'Bad email or password')
+      if (!row) {
+        throw boom.create(400, 'Bad email or password');
       }
 
       user = camelizeKeys(row);
@@ -46,7 +39,7 @@ router.post('/token', (req, res, next) => {
       return bcrypt.compare(password, user.hashedPassword);
     })
 
-    .then (() => {
+    .then(() => {
       delete user.hashedPassword;
 
       const expiry = new Date(Date.now() + 1000 * 60 * 60 * 3); // 3 hours
@@ -72,10 +65,9 @@ router.post('/token', (req, res, next) => {
     });
 });
 
-  router.delete('/token', (req, res, next) => {
-    res.clearCookie('token');
-    res.send(true);
-  });
-
+router.delete('/token', (req, res, _next) => {
+  res.clearCookie('token');
+  res.send(true);
+});
 
 module.exports = router;

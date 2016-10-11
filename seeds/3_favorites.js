@@ -1,9 +1,10 @@
+/* eslint-disable camelcase, max-len*/
 'use strict';
 
 exports.seed = function(knex) {
   return knex('favorites').del()
     .then(() => {
-      return knex ('favorites').insert([{
+      return knex('favorites').insert([{
         id: 1,
         book_id: 1,
         user_id: 1,
