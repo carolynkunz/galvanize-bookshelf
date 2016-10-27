@@ -65,7 +65,7 @@ app.use((err, _req, res, _next) => {
   }
 
   // eslint-disable-next-line no-console
-  // console.error(JSON.stringify(err, null, 2));
+  console.error(JSON.stringify(err, null, 2));
 
   if (err.status) {
     return res

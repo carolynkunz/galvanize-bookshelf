@@ -22,7 +22,8 @@ router.post('/users', ev(validations.post), (req, res, next) => {
       if (result.length > 0) {
         return next(boom.create(400, 'Email already exists'));
       }
-      bcrypt.hash(password, 12)
+
+      return bcrypt.hash(password, 12)
         .then((hashedPassword) => {
           const insertUser = { firstName, lastName, email, hashedPassword };
 

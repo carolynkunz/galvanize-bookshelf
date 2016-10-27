@@ -26,3 +26,31 @@ module.exports.post = {
       .trim()
   }
 };
+
+// module.exports.patch = {
+//   body: {
+//     title: Joi.string()
+//       .label('Title')
+//       .trim(),
+//     author: Joi.string()
+//       .label('Author')
+//       .trim(),
+//     genre: Joi.string()
+//       .label('Genre')
+//       .trim(),
+//     description: Joi.string()
+//       .label('Description')
+//       .trim(),
+//     coverUrl: Joi.string()
+//       .label('Cover URL')
+//       .trim()
+//   }
+//
+//   params: {
+//     id: Joi.number()
+//       .integer()
+//       .required()
+//       .min(0)
+//       .label('id')
+//   }
+// };
